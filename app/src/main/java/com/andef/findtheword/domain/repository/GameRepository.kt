@@ -8,4 +8,5 @@ interface GameRepository {
     fun addAnagram(word: String): Boolean
     fun clearAnagrams()
     fun checkAnagramForWord(word: String, anagram: String): Boolean
+    fun resumeAnagrams(anagrams: HashSet<String>)
 }

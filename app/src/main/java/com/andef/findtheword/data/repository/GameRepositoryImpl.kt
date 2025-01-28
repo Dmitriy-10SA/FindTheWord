@@ -12,7 +12,7 @@ object GameRepositoryImpl: GameRepository {
     val anagramsLiveData = MutableLiveData<HashSet<String>>()
 
     private val apiService = ApiFactory.getInstance()
-    private val anagrams = WordAnagrams.anagrams
+    private var anagrams = WordAnagrams.anagrams
 
     override fun checkWord(word: String): Single<WordFromAPI> {
         return apiService.checkWord(word)
@@ -54,6 +54,12 @@ object GameRepositoryImpl: GameRepository {
             }
         }
         return true
+    }
+
+    override fun resumeAnagrams(anagrams: HashSet<String>) {
+        WordAnagrams.anagrams = anagrams
+        this.anagrams = WordAnagrams.anagrams
+        notifyAnagrams()
     }
 
     private fun notifyAnagrams() {

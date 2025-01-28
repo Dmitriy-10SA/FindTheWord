@@ -1,7 +1,9 @@
 package com.andef.findtheword.presentation.ui
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -35,6 +37,8 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var viewModel: GameViewModel
 
+    private lateinit var settings: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -43,6 +47,8 @@ class GameActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        settings = application.getSharedPreferences(PREFS_FILE_WORD_AND_ANAGRAMS, Context.MODE_PRIVATE)
 
         initViews()
         initViewModel()
@@ -119,7 +125,21 @@ class GameActivity : AppCompatActivity() {
         }
         if (!intent.getBooleanExtra(EXTRA_CONTINUE_GAME, false)) {
             viewModel.clearAnagrams()
+        } else {
+            lastGame()
         }
+    }
+
+    private fun lastGame() {
+        val word = settings.getString(PREF_WORD, "")
+        if (word == "") {
+            getToast(R.string.is_not_last_game)
+            finish()
+        }
+        textViewCurrentWord.text = word
+        val anagrams =  settings.getString(PREF_ANAGRAMS, "")?.split("/") ?: listOf()
+        anagramAdapter.anagrams = anagrams
+        viewModel.resumeAnagrams(anagrams.toHashSet())
     }
 
     private fun showClearDialog() {
@@ -149,6 +169,33 @@ class GameActivity : AppCompatActivity() {
          }
     }
 
+    override fun onPause() {
+        savePref()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        savePref()
+        super.onDestroy()
+    }
+
+    private fun savePref() {
+        val settings = application
+            .getSharedPreferences(PREFS_FILE_WORD_AND_ANAGRAMS, Context.MODE_PRIVATE)
+        val prefEditor = settings.edit()
+        prefEditor.putString(PREF_WORD, textViewCurrentWord.text.toString().trim().lowercase())
+        val stringBuilder = StringBuilder()
+        for (word in anagramAdapter.anagrams.withIndex()) {
+            if (word.index != anagramAdapter.anagrams.size - 1) {
+                stringBuilder.append("${word.value}/")
+            } else {
+                stringBuilder.append(word.value)
+            }
+        }
+        prefEditor.putString(PREF_ANAGRAMS, stringBuilder.toString())
+        prefEditor.apply()
+    }
+
     private fun getToast(stringRes: Int) {
         Toast.makeText(this, stringRes, Toast.LENGTH_SHORT).show()
     }
@@ -156,6 +203,10 @@ class GameActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_WORD = "word"
         private const val EXTRA_CONTINUE_GAME = "continue"
+
+        private const val PREFS_FILE_WORD_AND_ANAGRAMS = "word and anagrams"
+        private const val PREF_WORD = "word"
+        private const val PREF_ANAGRAMS = "anagrams"
 
         fun newIntent(context: Context, word: String, continueGame: Boolean): Intent {
             val intent = Intent(context, GameActivity::class.java)

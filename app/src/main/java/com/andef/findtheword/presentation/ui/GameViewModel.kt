@@ -1,6 +1,9 @@
 package com.andef.findtheword.presentation.ui
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,12 +12,13 @@ import com.andef.findtheword.domain.usecases.CheckAnagramForWord
 import com.andef.findtheword.domain.usecases.CheckWord
 import com.andef.findtheword.domain.usecases.ClearAnagrams
 import com.andef.findtheword.domain.usecases.GetAnagrams
+import com.andef.findtheword.domain.usecases.ResumeAnagrams
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 
-class GameViewModel: ViewModel() {
+class GameViewModel(application: Application): AndroidViewModel(application) {
     private val compositeDisposable = CompositeDisposable()
 
     val isWord = MutableLiveData<Boolean>()
@@ -26,6 +30,10 @@ class GameViewModel: ViewModel() {
         if (!AddAnagram.execute(word)) {
             isItWas.value = true
         }
+    }
+
+    fun resumeAnagrams(anagrams: HashSet<String>) {
+        ResumeAnagrams.execute(anagrams)
     }
 
     fun checkWord(word: String) {
