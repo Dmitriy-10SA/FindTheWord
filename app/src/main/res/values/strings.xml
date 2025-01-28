@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">FindTheWord</string>
+    <string name="app_name">Найди слово</string>
+    <string name="app_icon">Иконка приложения</string>
+    <string name="new_game">Новая игра</string>
+    <string name="continue_game">Продолжить игру</string>
+    <string name="input_word">Введите слово</string>
+    <string name="ok">Ок</string>
+    <string name="cancel">Отмена</string>
+    <string name="your_word">Ваше слово</string>
+    <string name="input_word_exc">Введите слово!</string>
+    <string name="space_in_word">Введите одно слово!</string>
+    <string name="add_word">Добавить слово</string>
+    <string name="clear_anagrams">Удалить все анаграммы</string>
+    <string name="word_not_found">Слово не найдено в словаре!</string>
+    <string name="you_sure">Вы уверены?</string>
+    <string name="yes">Да</string>
+    <string name="exit">Выход</string>
+    <string name="word_length">Минимум 3 буквы!</string>
+    <string name="word_not_found_continue">Слово не найдено в словаре! Все равно начать?</string>
+    <string name="word_equals">Данное слово уже было!</string>
+    <string name="check_internet">Проверьте подключение к интернету!</string>
 </resources>

@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.rxandroid)
     implementation(libs.retrofit2.adapter.rxjava2)
+    implementation(libs.rxjava2.rxandroid)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
