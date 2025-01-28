@@ -12,6 +12,7 @@
 - Clean Architecture
 - RxJava 2
 - SharedPreferences
+- API Словаря (Яндекс)
 
 ---
 
