@@ -3,17 +3,79 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@drawable/app_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".presentation.ui.MainActivity">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ImageView
+            android:contentDescription="@string/app_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="400dp"
+            android:maxWidth="400dp"
+            android:layout_marginBottom="16dp"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/tt" />
+
+        <Button
+            android:id="@+id/buttonNewGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textColor="@color/white"
+            android:text="@string/new_game"
+            android:padding="8dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:backgroundTint="@color/buttons_color"
+            android:textSize="24sp"
+            app:cornerRadius="10dp"/>
+
+        <Button
+            android:id="@+id/buttonContinueGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/buttons_color"
+            android:padding="8dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:text="@string/continue_game"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:cornerRadius="10dp"/>
+
+        <Button
+            android:id="@+id/buttonFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/buttons_color"
+            android:padding="8dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:text="@string/exit"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:cornerRadius="10dp"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:tint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
