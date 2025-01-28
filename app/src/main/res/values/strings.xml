@@ -20,4 +20,6 @@
     <string name="word_equals">Данное слово уже было!</string>
     <string name="check_internet">Проверьте подключение к интернету!</string>
     <string name="is_not_anagram">Не является анаграммой!</string>
+    <string name="is_not_last_game">Нет прошлой игры!</string>
+    <string name="for_save_anagrams">Для сохранения анаграмм нужно нажать выход, иначе все анаграммы сотрутся!</string>
 </resources>

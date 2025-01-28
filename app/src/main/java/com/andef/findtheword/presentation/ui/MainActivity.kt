@@ -46,9 +46,7 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener { showInputDialog() }
         }
         buttonContinueGame = findViewById<Button?>(R.id.buttonContinueGame).apply {
-            setOnClickListener {
-                //переход к прошлой игре
-            }
+            setOnClickListener { lastGameScreen() }
         }
         buttonFinish = findViewById<Button?>(R.id.buttonFinish).apply {
             setOnClickListener { finish() }
@@ -138,6 +136,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun getToast(stringRes: Int) {
         Toast.makeText(this, stringRes, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun lastGameScreen() {
+        val intent = GameActivity.newIntent(this, "", true)
+        startActivity(intent)
     }
 
     private fun newGameScreen(word: String) {
