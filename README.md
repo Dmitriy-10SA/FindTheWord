@@ -11,6 +11,7 @@
 - Retrofit
 - Clean Architecture
 - RxJava 2
+- SharedPreferences
 
 ---
 
