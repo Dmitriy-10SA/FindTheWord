@@ -137,7 +137,11 @@ class GameActivity : AppCompatActivity() {
             finish()
         }
         textViewCurrentWord.text = word
-        val anagrams =  settings.getString(PREF_ANAGRAMS, "")?.split("/") ?: listOf()
+        val anagrams = settings.getString(PREF_ANAGRAMS, null)?.split("/")
+        if (anagrams.isNullOrEmpty() || (anagrams.isNotEmpty() && anagrams[0] == "")) {
+            viewModel.clearAnagrams()
+            return
+        }
         anagramAdapter.anagrams = anagrams
         viewModel.resumeAnagrams(anagrams.toHashSet())
     }
