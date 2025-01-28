@@ -90,11 +90,17 @@ class GameActivity : AppCompatActivity() {
         }
         viewModel.isWord.observe(this) { isWord ->
             if (isWord) {
-                viewModel.addAnagram(editTextInputWord.text.toString().trim().lowercase())
-                editTextInputWord.text.clear()
+                val anagram = editTextInputWord.text.toString().trim().lowercase()
+                val word = textViewCurrentWord.text.toString().trim().lowercase()
+                if (viewModel.checkAnagramForWord(word, anagram)) {
+                    viewModel.addAnagram(anagram)
+                    editTextInputWord.text.clear()
+                } else {
+                    getToast(R.string.is_not_anagram)
+                }
             }
             else {
-                Toast.makeText(this, R.string.word_not_found, Toast.LENGTH_SHORT).show()
+                getToast(R.string.word_not_found)
             }
         }
         viewModel.isLoading.observe(this) { isLoading ->

@@ -32,6 +32,30 @@ object GameRepositoryImpl: GameRepository {
         notifyAnagrams()
     }
 
+    override fun checkAnagramForWord(word: String, anagram: String): Boolean {
+        val charAndCnt = HashMap<Char, Int>()
+        for (char in word) {
+            if (charAndCnt.contains(char)) {
+                charAndCnt[char] = charAndCnt.getValue(char) + 1
+            } else {
+                charAndCnt[char] = 1
+            }
+        }
+        for (char in anagram) {
+            if (charAndCnt.contains(char)) {
+                val value = charAndCnt.getValue(char) - 1
+                if (value < 0) {
+                    return false
+                } else {
+                    charAndCnt[char] = value
+                }
+            } else {
+                return false
+            }
+        }
+        return true
+    }
+
     private fun notifyAnagrams() {
         anagramsLiveData.value = anagrams
     }

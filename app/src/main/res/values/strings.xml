@@ -19,4 +19,5 @@
     <string name="word_not_found_continue">Слово не найдено в словаре! Все равно начать?</string>
     <string name="word_equals">Данное слово уже было!</string>
     <string name="check_internet">Проверьте подключение к интернету!</string>
+    <string name="is_not_anagram">Не является анаграммой!</string>
 </resources>
