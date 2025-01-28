@@ -12,7 +12,7 @@
 - Clean Architecture
 - RxJava 2
 - SharedPreferences
-- API Словаря (Яндекс)
+- API Словаря Яндекс (https://yandex.ru/dev/dictionary?win=670)
 
 ---
 
