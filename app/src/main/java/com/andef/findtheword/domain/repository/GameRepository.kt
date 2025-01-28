@@ -7,4 +7,5 @@ interface GameRepository {
     fun checkWord(word: String): Single<WordFromAPI>
     fun addAnagram(word: String): Boolean
     fun clearAnagrams()
+    fun checkAnagramForWord(word: String, anagram: String): Boolean
 }

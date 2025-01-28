@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andef.findtheword.domain.usecases.AddAnagram
+import com.andef.findtheword.domain.usecases.CheckAnagramForWord
 import com.andef.findtheword.domain.usecases.CheckWord
 import com.andef.findtheword.domain.usecases.ClearAnagrams
 import com.andef.findtheword.domain.usecases.GetAnagrams
@@ -47,6 +48,10 @@ class GameViewModel: ViewModel() {
                 }
             )
         compositeDisposable.add(disposable)
+    }
+
+    fun checkAnagramForWord(word: String, anagram: String): Boolean {
+        return CheckAnagramForWord.execute(word, anagram)
     }
 
     fun getAnagrams(): LiveData<HashSet<String>> {
