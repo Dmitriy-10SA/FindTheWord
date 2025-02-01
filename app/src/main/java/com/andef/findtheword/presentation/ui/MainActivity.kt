@@ -66,12 +66,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         viewModel.isLoading.observe(this) { isLoading ->
-            if (isLoading) {
-                progressBarMain.visibility = VISIBLE
-            }
-            else {
-                progressBarMain.visibility = GONE
-            }
+            if (isLoading) progressBarMain.visibility = VISIBLE
+            else progressBarMain.visibility = GONE
         }
         viewModel.checkInternet.observe(this) {
             getToast(R.string.check_internet)
@@ -84,9 +80,8 @@ class MainActivity : AppCompatActivity() {
             text = getString(R.string.word_not_found_continue)
             gravity = Gravity.CENTER
         }
-        backgroundView.findViewById<EditText>(R.id.editTextDialog).apply {
-            visibility = GONE
-        }
+        backgroundView.findViewById<Button>(R.id.buttonRandomWord).apply { visibility = GONE }
+        backgroundView.findViewById<EditText>(R.id.editTextDialog).apply { visibility = GONE }
         val buttonCancel = backgroundView.findViewById<Button>(R.id.buttonCancel)
         val buttonOk = backgroundView.findViewById<Button>(R.id.buttonOk).apply {
             text = getString(R.string.yes)

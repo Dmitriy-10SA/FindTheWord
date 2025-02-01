@@ -154,6 +154,9 @@ class GameActivity : AppCompatActivity() {
         backgroundView.findViewById<EditText>(R.id.editTextDialog).apply {
             visibility = GONE
         }
+        backgroundView.findViewById<Button>(R.id.buttonRandomWord).apply {
+            visibility = GONE
+        }
         val buttonCancel = backgroundView.findViewById<Button>(R.id.buttonCancel)
         val buttonOk = backgroundView.findViewById<Button>(R.id.buttonOk).apply {
             text = getString(R.string.yes)
