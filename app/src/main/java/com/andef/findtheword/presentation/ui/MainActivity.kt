@@ -84,9 +84,7 @@ class MainActivity : AppCompatActivity() {
             text = getString(R.string.word_not_found_continue)
             gravity = Gravity.CENTER
         }
-        backgroundView.findViewById<Button>(R.id.buttonRandomWord).apply {
-            visibility = GONE
-        }
+        backgroundView.findViewById<Button>(R.id.buttonRandomWord).apply { visibility = GONE }
         backgroundView.findViewById<EditText>(R.id.editTextDialog).apply {
             visibility = GONE
         }
