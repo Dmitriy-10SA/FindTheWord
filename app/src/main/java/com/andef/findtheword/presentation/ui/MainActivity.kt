@@ -111,6 +111,7 @@ class MainActivity : AppCompatActivity() {
         val editTextDialog = backgroundView.findViewById<EditText>(R.id.editTextDialog)
         val buttonCancel = backgroundView.findViewById<Button>(R.id.buttonCancel)
         val buttonOk = backgroundView.findViewById<Button>(R.id.buttonOk)
+        val buttonRandomWord = backgroundView.findViewById<Button>(R.id.buttonRandomWord)
 
         val dialog = AlertDialog.Builder(this)
             .setView(backgroundView)
@@ -131,6 +132,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 getToast(R.string.input_word_exc)
             }
+        }
+        buttonRandomWord.setOnClickListener {
+            val randomWord = viewModel.getRandomWord()
+            editTextDialog.setText(randomWord.trim().lowercase())
         }
     }
 

@@ -22,4 +22,5 @@
     <string name="is_not_anagram">Не является анаграммой!</string>
     <string name="is_not_last_game">Нет прошлой игры!</string>
     <string name="for_save_anagrams">Для сохранения анаграмм нужно нажать выход, иначе все анаграммы сотрутся!</string>
+    <string name="random_word">Сгенерировать случайное слово</string>
 </resources>
