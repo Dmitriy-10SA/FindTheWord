@@ -1,17 +1,18 @@
-<img src="https://github.com/user-attachments/assets/ed903c44-a81b-414b-93b4-482100f03988" width="200" />
+<img src="https://github.com/user-attachments/assets/b774f2d9-207f-4dc9-98ec-aa71551a80f5" width="200" />
 
-# **Math sprint game for android.**  
-*Игра математический спринт для андроид.*
+# **Find the word game for android.**  
+*Игра найди слово для андроид.*
 
 ---
 
 ## **Stack (стек):**
 - Kotlin  
 - MVVM
-- Jetpack Navigation
+- Retrofit 2
 - Clean Architecture
-- Coroutines
+- RxJava 2
 - SharedPreferences
+- API Словаря Яндекс (https://yandex.ru/dev/dictionary?win=670)
 
 ---
 
@@ -19,4 +20,4 @@
 *Cсылка на скачивание приложения:*
 
 
-[**Download app (скачать приложение)**](позже)
+[**Download app (скачать приложение)**](https://www.rustore.ru/catalog/app/com.andef.findtheword)
