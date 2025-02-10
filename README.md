@@ -8,7 +8,7 @@
 ## **Stack (стек):**
 - Kotlin  
 - MVVM
-- Retrofit
+- Retrofit 2
 - Clean Architecture
 - RxJava 2
 - SharedPreferences
