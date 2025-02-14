@@ -9,7 +9,9 @@
 - Kotlin  
 - MVVM
 - Retrofit 2
+- Clean Architecture
 - RxJava 2
+- Dagger 2
 - SharedPreferences
 - API Словаря Яндекс (https://yandex.ru/dev/dictionary?win=670)
 
