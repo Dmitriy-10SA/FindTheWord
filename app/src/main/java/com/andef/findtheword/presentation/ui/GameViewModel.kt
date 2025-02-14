@@ -1,24 +1,31 @@
 package com.andef.findtheword.presentation.ui
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andef.findtheword.domain.usecases.AddAnagram
-import com.andef.findtheword.domain.usecases.CheckAnagramForWord
-import com.andef.findtheword.domain.usecases.CheckWord
-import com.andef.findtheword.domain.usecases.ClearAnagrams
-import com.andef.findtheword.domain.usecases.GetAnagrams
-import com.andef.findtheword.domain.usecases.ResumeAnagrams
+import com.andef.findtheword.domain.usecases.AddAnagramUseCase
+import com.andef.findtheword.domain.usecases.CheckAnagramForWordUseCase
+import com.andef.findtheword.domain.usecases.CheckWordUseCase
+import com.andef.findtheword.domain.usecases.ClearAnagramsUseCase
+import com.andef.findtheword.domain.usecases.GetAnagramsUseCase
+import com.andef.findtheword.domain.usecases.ResumeAnagramsUseCase
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
 
 
-class GameViewModel(application: Application): AndroidViewModel(application) {
+class GameViewModel @Inject constructor(
+    private val addAnagramUseCase: AddAnagramUseCase,
+    private val resumeAnagramsUseCase: ResumeAnagramsUseCase,
+    private val checkAnagramForWordUseCase: CheckAnagramForWordUseCase,
+    private val checkWordUseCase: CheckWordUseCase,
+    private val getAnagramsUseCase: GetAnagramsUseCase,
+    private val clearAnagramsUseCase: ClearAnagramsUseCase
+): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
     val isWord = MutableLiveData<Boolean>()
@@ -27,17 +34,17 @@ class GameViewModel(application: Application): AndroidViewModel(application) {
     val checkInternet = MutableLiveData<Boolean>()
 
     fun addAnagram(word: String) {
-        if (!AddAnagram.execute(word)) {
+        if (!addAnagramUseCase.execute(word)) {
             isItWas.value = true
         }
     }
 
     fun resumeAnagrams(anagrams: HashSet<String>) {
-        ResumeAnagrams.execute(anagrams)
+        resumeAnagramsUseCase.execute(anagrams)
     }
 
     fun checkWord(word: String) {
-        val disposable = CheckWord.execute(word)
+        val disposable = checkWordUseCase.execute(word)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { isLoading.value = true }
@@ -59,15 +66,15 @@ class GameViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun checkAnagramForWord(word: String, anagram: String): Boolean {
-        return CheckAnagramForWord.execute(word, anagram)
+        return checkAnagramForWordUseCase.execute(word, anagram)
     }
 
     fun getAnagrams(): LiveData<HashSet<String>> {
-        return GetAnagrams.execute()
+        return getAnagramsUseCase.execute()
     }
 
     fun clearAnagrams() {
-        ClearAnagrams.execute()
+        clearAnagramsUseCase.execute()
     }
 
     override fun onCleared() {

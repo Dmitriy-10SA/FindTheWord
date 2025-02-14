@@ -3,12 +3,15 @@ package com.andef.findtheword.presentation.ui
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andef.findtheword.domain.usecases.CheckWord
+import com.andef.findtheword.domain.usecases.CheckWordUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val checkWordUseCase: CheckWordUseCase
+) : ViewModel() {
     private val randomWords = listOf(
         "Газонокосилка", "Демонстрация", "Гуманитарий", "Полезность", "Исследование",
         "Домовладелец", "Хрупкость", "Динозавр", "Компонент", "Скороговорка",
@@ -30,7 +33,7 @@ class MainViewModel : ViewModel() {
     fun getRandomWord(): String = randomWords.random()
 
     fun checkWord(word: String) {
-        val disposable = CheckWord.execute(word)
+        val disposable = checkWordUseCase.execute(word)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { isLoading.value = true }

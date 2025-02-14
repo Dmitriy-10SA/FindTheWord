@@ -4,18 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.andef.findtheword.R
 
 
-class AnagramAdapter: RecyclerView.Adapter<AnagramAdapter.AnagramViewHolder>() {
+class AnagramAdapter: ListAdapter<String, AnagramAdapter.AnagramViewHolder>(AnagramCallback()) {
     private var _anagrams = mutableListOf<String>()
     var anagrams = _anagrams.toList()
         get() = _anagrams.toList()
         set(value) {
             _anagrams = value.toMutableList()
             field = _anagrams.toList()
-            notifyDataSetChanged()
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnagramViewHolder {
@@ -28,12 +28,8 @@ class AnagramAdapter: RecyclerView.Adapter<AnagramAdapter.AnagramViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: AnagramViewHolder, position: Int) {
-        val word = _anagrams[position]
+        val word = getItem(position)
         holder.textViewAnagram.text = word
-    }
-
-    override fun getItemCount(): Int {
-        return _anagrams.size
     }
 
     class AnagramViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

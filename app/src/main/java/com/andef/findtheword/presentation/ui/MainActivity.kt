@@ -15,20 +15,32 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.andef.findtheword.R
+import com.andef.findtheword.presentation.app.FindTheWordApplication
+import com.andef.findtheword.presentation.factory.ViewModelFactory
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
+    private val component by lazy {
+        (application as FindTheWordApplication).component
+    }
+
     private lateinit var buttonNewGame: Button
     private lateinit var buttonContinueGame: Button
     private lateinit var buttonFinish: Button
 
     private lateinit var progressBarMain: ProgressBar
 
-    private lateinit var viewModel: MainViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+    }
 
     private var word = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -56,7 +68,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.isWord.observe(this) { isWord ->
             if (isWord) {
                 newGameScreen(word)

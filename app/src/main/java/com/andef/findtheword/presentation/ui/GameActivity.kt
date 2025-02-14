@@ -20,9 +20,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.andef.findtheword.R
 import com.andef.findtheword.presentation.adapter.AnagramAdapter
+import com.andef.findtheword.presentation.app.FindTheWordApplication
+import com.andef.findtheword.presentation.factory.ViewModelFactory
+import javax.inject.Inject
 
 
 class GameActivity : AppCompatActivity() {
+    private val component by lazy {
+        (application as FindTheWordApplication).component
+    }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[GameViewModel::class.java]
+    }
+
     private lateinit var textViewCurrentWord: TextView
 
     private lateinit var anagramAdapter: AnagramAdapter
@@ -35,11 +48,10 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
 
-    private lateinit var viewModel: GameViewModel
-
     private lateinit var settings: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -90,9 +102,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this)[GameViewModel::class.java]
         viewModel.getAnagrams().observe(this) {
             anagramAdapter.anagrams = it.toList()
+            anagramAdapter.submitList(it.toList())
         }
         viewModel.isWord.observe(this) { isWord ->
             if (isWord) {

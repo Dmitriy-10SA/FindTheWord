@@ -1,21 +1,27 @@
 package com.andef.findtheword.data.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.andef.findtheword.data.api.ApiFactory
+import com.andef.findtheword.data.api.ApiService
 import com.andef.findtheword.data.datasource.WordAnagrams
+import com.andef.findtheword.data.mapper.DtoMapper
+import com.andef.findtheword.di.ApplicationScope
 import com.andef.findtheword.domain.entities.WordFromAPI
 import com.andef.findtheword.domain.repository.GameRepository
 import io.reactivex.Single
+import javax.inject.Inject
 
+@ApplicationScope
+class GameRepositoryImpl @Inject constructor(
+    private val apiService: ApiService
+) : GameRepository {
+    override val anagramsLiveData = MutableLiveData<HashSet<String>>()
 
-object GameRepositoryImpl: GameRepository {
-    val anagramsLiveData = MutableLiveData<HashSet<String>>()
-
-    private val apiService = ApiFactory.getInstance()
     private var anagrams = WordAnagrams.anagrams
 
     override fun checkWord(word: String): Single<WordFromAPI> {
-        return apiService.checkWord(word)
+        return apiService.checkWord(word).map {
+            DtoMapper.mapWordFromApiDtoToWordFromApi(it)
+        }
     }
 
     override fun addAnagram(word: String): Boolean {
