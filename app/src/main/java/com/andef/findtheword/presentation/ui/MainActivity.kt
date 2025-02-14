@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.andef.findtheword.R
+import com.andef.findtheword.databinding.ActivityMainBinding
 import com.andef.findtheword.presentation.app.FindTheWordApplication
 import com.andef.findtheword.presentation.factory.ViewModelFactory
 import javax.inject.Inject
@@ -24,12 +25,9 @@ class MainActivity : AppCompatActivity() {
     private val component by lazy {
         (application as FindTheWordApplication).component
     }
-
-    private lateinit var buttonNewGame: Button
-    private lateinit var buttonContinueGame: Button
-    private lateinit var buttonFinish: Button
-
-    private lateinit var progressBarMain: ProgressBar
+    private val binding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -54,17 +52,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        buttonNewGame = findViewById<Button?>(R.id.buttonNewGame).apply {
-            setOnClickListener { showInputDialog() }
-        }
-        buttonContinueGame = findViewById<Button?>(R.id.buttonContinueGame).apply {
-            setOnClickListener { lastGameScreen() }
-        }
-        buttonFinish = findViewById<Button?>(R.id.buttonFinish).apply {
-            setOnClickListener { finish() }
-        }
-
-        progressBarMain = findViewById(R.id.progressBarMain)
+        binding.buttonNewGame.setOnClickListener { showInputDialog() }
+        binding.buttonContinueGame.setOnClickListener { lastGameScreen() }
+        binding.buttonFinish.setOnClickListener { finish() }
     }
 
     private fun initViewModel() {
@@ -77,8 +67,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         viewModel.isLoading.observe(this) { isLoading ->
-            if (isLoading) progressBarMain.visibility = VISIBLE
-            else progressBarMain.visibility = GONE
+            if (isLoading) binding.progressBarMain.visibility = VISIBLE
+            else binding.progressBarMain.visibility = GONE
         }
         viewModel.checkInternet.observe(this) {
             getToast(R.string.check_internet)

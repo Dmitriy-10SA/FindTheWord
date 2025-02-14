@@ -7,9 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.andef.findtheword.R
+import javax.inject.Inject
 
 
-class AnagramAdapter: ListAdapter<String, AnagramAdapter.AnagramViewHolder>(AnagramCallback()) {
+class AnagramAdapter @Inject constructor(): ListAdapter<String, AnagramAdapter.AnagramViewHolder>(AnagramCallback()) {
     private var _anagrams = mutableListOf<String>()
     var anagrams = _anagrams.toList()
         get() = _anagrams.toList()
